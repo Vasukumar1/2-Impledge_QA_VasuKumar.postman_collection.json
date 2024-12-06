@@ -18,7 +18,6 @@ Name: Get Shipment Details
 Method: GET
 URL:
 bash
-Copy code
 https://api.easypost.com/v2/shipments/shp_e0b570fd1d7d4b62bd206917eae5881a
 Go to the Authorization tab:
 
@@ -31,7 +30,7 @@ Test Scripts for "Get Shipment Details":
 Open the Tests tab of the Get Shipment Details request.
 Add the following test cases:
 javascript
-Copy code
+
 // Test 1: Verify selected_rate.retail_rate is 12
 pm.test("Verify selected_rate.retail_rate is 12", function () {
     const response = pm.response.json();
