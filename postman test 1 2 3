@@ -1,0 +1,45 @@
+**POSTMAN Test 01: Fix Failing Test Cases**
+// Test 1: Check response has no errors
+pm.test("Response body has no errors", function () {
+    const response = pm.response.json();
+    pm.expect(response.errors).to.eql([]); // Ensure errors array is empty
+});
+
+// Test 2: Verify ZIP code in the response
+pm.test("Response ZIP verified", function () {
+    const response = pm.response.json();
+    pm.expect(response.zip).to.include("06810");
+});
+**POSTMAN Test 02: New Request – Get Shipment Details**
+New Request Setup:
+Create a new request:
+
+Name: Get Shipment Details
+Method: GET
+URL:
+bash
+Copy code
+https://api.easypost.com/v2/shipments/shp_e0b570fd1d7d4b62bd206917eae5881a
+Go to the Authorization tab:
+
+Select Basic Auth.
+Enter the API Key provided in the collection (EZTK0126bfcd0c834208b2289e3c501630d7IMAAxVrGZ2G1UXCmomm4Pw) as the username.
+Leave the password blank.
+save request
+** POSTMAN Test 03: Add Test Cases**
+Test Scripts for "Get Shipment Details":
+Open the Tests tab of the Get Shipment Details request.
+Add the following test cases:
+javascript
+Copy code
+// Test 1: Verify selected_rate.retail_rate is 12
+pm.test("Verify selected_rate.retail_rate is 12", function () {
+    const response = pm.response.json();
+    pm.expect(response.selected_rate.retail_rate).to.eql(12);
+});
+
+// Test 2: Verify retail_rate is greater than list_rate
+pm.test("Verify retail_rate is greater than list_rate", function () {
+    const response = pm.response.json();
+    pm.expect(response.selected_rate.retail_rate).to.be.greaterThan(response.selected_rate.list_rate);
+});
