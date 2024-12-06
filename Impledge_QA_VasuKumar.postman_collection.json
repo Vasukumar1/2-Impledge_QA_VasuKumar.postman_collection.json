@@ -1,0 +1,106 @@
+{
+    "info": {
+        "_postman_id": "2acfee95-8dc9-4485-8d6c-16f2391e0d76",
+        "name": "Impledge_QA_VasuKumar",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Address - Verify",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "// Test 1: Check response has no errors",
+                            "pm.test(\"Response body has no errors\", function () {",
+                            "    const response = pm.response.json();",
+                            "    pm.expect(response.errors).to.eql([]); // Ensure errors array is empty",
+                            "});",
+                            "",
+                            "// Test 2: Verify ZIP code in the response",
+                            "pm.test(\"Response ZIP verified\", function () {",
+                            "    const response = pm.response.json();",
+                            "    pm.expect(response.zip).to.include(\"06810\");",
+                            "});"
+                        ]
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "EZTK0126bfcd0c834208b2289e3c501630d7IMAAxVrGZ2G1UXCmomm4Pw",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"company\": \"Residence Inn\",\n    \"street1\": \"22 Segar St\",\n    \"street2\": \"\",\n    \"city\": \"Danbury\",\n    \"country\": \"US\",\n    \"phone\": \"855-782-3877\",\n    \"email\": \"shipper@mailinator.com\"\n}"
+                },
+                "url": {
+                    "raw": "https://api.easypost.com/v2/addresses?verify_strict[]=delivery",
+                    "protocol": "https",
+                    "host": ["api", "easypost", "com"],
+                    "path": ["v2", "addresses"],
+                    "query": [
+                        {
+                            "key": "verify_strict[]",
+                            "value": "delivery"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Shipment Details",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "// Test 1: Verify selected_rate.retail_rate is 12",
+                            "pm.test(\"Verify selected_rate.retail_rate is 12\", function () {",
+                            "    const response = pm.response.json();",
+                            "    pm.expect(response.selected_rate.retail_rate).to.eql(12);",
+                            "});",
+                            "",
+                            "// Test 2: Verify retail_rate is greater than list_rate",
+                            "pm.test(\"Verify retail_rate is greater than list_rate\", function () {",
+                            "    const response = pm.response.json();",
+                            "    pm.expect(response.selected_rate.retail_rate).to.be.greaterThan(response.selected_rate.list_rate);",
+                            "});"
+                        ]
+                    }
+                }
+            ],
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "EZTK0126bfcd0c834208b2289e3c501630d7IMAAxVrGZ2G1UXCmomm4Pw",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "https://api.easypost.com/v2/shipments/shp_e0b570fd1d7d4b62bd206917eae5881a",
+                    "protocol": "https",
+                    "host": ["api", "easypost", "com"],
+                    "path": ["v2", "shipments", "shp_e0b570fd1d7d4b62bd206917eae5881a"]
+                }
+            },
+            "response": []
+        }
+    ]
+}
